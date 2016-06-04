@@ -45,29 +45,30 @@ namespace MMS
             Su = su;
             if (su.St.ToString() == "SERVER")
             {
+                //初始化Socket
+                IPAddress ipa = IPAddress.Parse(su.Ip);
+                Sk = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                IPEndPoint iep = new IPEndPoint(ipa, su.Port);
+                //绑定server端IP 与 端口
+                sk.Bind(iep);
+
                 thds = new Thread(this.SocketServer);
+                thds.Start(su);
             }
             else
             {
                 thds = new Thread(this.SocketClient);
+                
+                thds.Start();
             }
             thds.Name = name;
-            thds.Start();
+            
         }
 
         public void SocketServer(object obj)
         {
             SocketUnit su_temp = (SocketUnit)obj;
-            IPAddress ipa = IPAddress.Parse(su_temp.Ip);
-            Sk = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            IPEndPoint iep = new IPEndPoint(ipa, su_temp.Port);
-            //存储client发过来的数据
-            Byte[] byteMessage = new Byte[100];
-            //绑定server端IP 与 端口
-            if (!sk.Connected)
-            {
-                sk.Bind(iep);
-            }
+            
             while (true)
             {
                 try {
@@ -76,18 +77,16 @@ namespace MMS
                     //接受请求，并返回套接字
                     Socket skRev = sk.Accept();
                     //套接字处理对话
-                    skRev.Receive(byteMessage);
-                    string msg = System.Text.Encoding.Default.GetString(byteMessage).Trim();
-                    //判断是否是Client端请求数据的命令，并发送对应数据回去
-                    if (msg == "GET")
-                    {
-                        skRev.Send(System.Text.Encoding.Default.GetBytes(su_temp.Infor));
-                    }
+                    //skRev.Receive(byteMessage);
+                    //string msg = System.Text.Encoding.Default.GetString(byteMessage).Trim();
+                    //发送PLC传进来的数据
+                    skRev.Send(System.Text.Encoding.Default.GetBytes(su_temp.Infor));
 
                     skRev.Close();
                 }
                 catch (SocketException e)
                 {
+                    Sk.Close();
                     throw new Exception(e.ToString());
                     
                 }
@@ -97,27 +96,17 @@ namespace MMS
 
         public void SocketClient()
         {
-            Byte[] byteMessage = new Byte[100];
-            //建立并保持Socket连接
-            
-            //IPAddress ipa = IPAddress.Parse(Su.Ip);
-            Sk = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-            if (!sk.Connected)
-            {
-                try
-                {
-                    Sk.Connect(Su.Ip, Su.Port);
-                }
-                catch (SocketException se) {
-                    throw new Exception(se.ToString());
-                }
-            }
             
             while (true)
             {
                 try
                 {
+                    //每次循环清空byteMessage
+                    Byte[] byteMessage = new Byte[100];
+                    //每次循环重新连接，为了符合Server的Accept功能,重新建立连接
+                    Sk = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    Sk.Connect(Su.Ip, Su.Port);
+                        
                     //休眠50ms
                     Thread.Sleep(50);
 
@@ -127,11 +116,14 @@ namespace MMS
                         sk.Receive(byteMessage);
                         Su.Infor = System.Text.Encoding.Default.GetString(byteMessage).ToString();
                     }
+
+                    //关闭本套接字
+                    Sk.Close();
                     
                 }
                 catch (SocketException ex)
                 {
-                    throw new Exception(ex.ToString());
+                    throw new Exception("Socket连接错误：" + ex.ToString());
                 }  
             }
         }
