@@ -1,0 +1,8 @@
+M:\Project\MMS\MMS\MMS\obj\x86\Debug\MMS.Properties.Resources.resources
+M:\Project\MMS\MMS\MMS\obj\x86\Debug\MMS.csproj.GenerateResource.Cache
+M:\Project\MMS\MMS\MMS\bin\Debug\MMS.exe
+M:\Project\MMS\MMS\MMS\bin\Debug\MMS.pdb
+M:\Project\MMS\MMS\MMS\obj\x86\Debug\MMS.exe
+M:\Project\MMS\MMS\MMS\obj\x86\Debug\MMS.pdb
+M:\Project\MMS\MMS\MMS\obj\x86\Debug\MMS.MSM.resources
+M:\Project\MMS\MMS\MMS\obj\x86\Debug\MMS.UnitCellState.resources

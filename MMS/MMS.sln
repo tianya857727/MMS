@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMS", "MMS\MMS.csproj", "{F0342307-0709-41E4-ADC4-BBC15164CD2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MM", "..\MM\MM\MM.csproj", "{E1EC806F-BFDD-4A69-8EAC-1F3EA89DCDA2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F0342307-0709-41E4-ADC4-BBC15164CD2C}.Debug|x86.ActiveCfg = Debug|x86
+		{F0342307-0709-41E4-ADC4-BBC15164CD2C}.Debug|x86.Build.0 = Debug|x86
+		{F0342307-0709-41E4-ADC4-BBC15164CD2C}.Release|x86.ActiveCfg = Release|x86
+		{F0342307-0709-41E4-ADC4-BBC15164CD2C}.Release|x86.Build.0 = Release|x86
+		{E1EC806F-BFDD-4A69-8EAC-1F3EA89DCDA2}.Debug|x86.ActiveCfg = Debug|x86
+		{E1EC806F-BFDD-4A69-8EAC-1F3EA89DCDA2}.Debug|x86.Build.0 = Debug|x86
+		{E1EC806F-BFDD-4A69-8EAC-1F3EA89DCDA2}.Release|x86.ActiveCfg = Release|x86
+		{E1EC806F-BFDD-4A69-8EAC-1F3EA89DCDA2}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

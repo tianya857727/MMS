@@ -1,0 +1,7 @@
+M:\Project\MMS\MM\MM\bin\Debug\MM.exe
+M:\Project\MMS\MM\MM\bin\Debug\MM.pdb
+M:\Project\MMS\MM\MM\obj\x86\Debug\MM.MM.resources
+M:\Project\MMS\MM\MM\obj\x86\Debug\MM.Properties.Resources.resources
+M:\Project\MMS\MM\MM\obj\x86\Debug\MM.csproj.GenerateResource.Cache
+M:\Project\MMS\MM\MM\obj\x86\Debug\MM.exe
+M:\Project\MMS\MM\MM\obj\x86\Debug\MM.pdb
