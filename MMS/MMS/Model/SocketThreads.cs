@@ -57,13 +57,17 @@ namespace MMS
 
         public void SocketServer(object obj)
         {
-            IPAddress ipa = IPAddress.Parse(Su.Ip);
+            SocketUnit su_temp = (SocketUnit)obj;
+            IPAddress ipa = IPAddress.Parse(su_temp.Ip);
             Sk = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            IPEndPoint iep = new IPEndPoint(ipa, Su.Port);
+            IPEndPoint iep = new IPEndPoint(ipa, su_temp.Port);
             //存储client发过来的数据
             Byte[] byteMessage = new Byte[100];
             //绑定server端IP 与 端口
-            sk.Bind(iep);
+            if (!sk.Connected)
+            {
+                sk.Bind(iep);
+            }
             while (true)
             {
                 try {
@@ -76,8 +80,8 @@ namespace MMS
                     string msg = System.Text.Encoding.Default.GetString(byteMessage).Trim();
                     //判断是否是Client端请求数据的命令，并发送对应数据回去
                     if (msg == "GET")
-                    { 
-                        skRev.Send(System.Text.Encoding.Default.GetBytes(Su.Infor));
+                    {
+                        skRev.Send(System.Text.Encoding.Default.GetBytes(su_temp.Infor));
                     }
 
                     skRev.Close();
@@ -101,7 +105,13 @@ namespace MMS
 
             if (!sk.Connected)
             {
-                Sk.Connect(Su.Ip, Su.Port);
+                try
+                {
+                    Sk.Connect(Su.Ip, Su.Port);
+                }
+                catch (SocketException se) {
+                    throw new Exception(se.ToString());
+                }
             }
             
             while (true)
