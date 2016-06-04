@@ -51,6 +51,7 @@
     <Compile Include="Model\BinaryToSignal.cs" />
     <Compile Include="Model\config.cs" />
     <Compile Include="Model\SocketThreads.cs" />
+    <Compile Include="Model\SocketUnit.cs" />
     <Compile Include="Model\XmlUtil.cs" />
     <Compile Include="MSM.cs">
       <SubType>Form</SubType>

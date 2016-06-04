@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.gb1 = new System.Windows.Forms.GroupBox();
             this.btnDiscon = new System.Windows.Forms.Button();
             this.btnCon = new System.Windows.Forms.Button();
@@ -50,6 +51,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.gb1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -263,7 +265,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(41, 111);
+            this.textBox1.Location = new System.Drawing.Point(9, 116);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(746, 20);
             this.textBox1.TabIndex = 2;
@@ -296,6 +298,11 @@
             this.label3.Size = new System.Drawing.Size(338, 29);
             this.label3.TabIndex = 3;
             this.label3.Text = "Machine State Monitoring";
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // MSM
             // 
@@ -343,5 +350,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Timer timer1;
     }
 }

@@ -18,7 +18,7 @@ namespace MMS
     public partial class MSM : Form
     {
         private  string xmlPath = "..\\..\\config.xml";
-
+        private SocketThreads stClient;
         public MSM()
         {
 
@@ -116,8 +116,8 @@ namespace MMS
                     //判断是否选定
                     if (cell == cfunit.CellName)
                     {   //创建Socket客户端线程
-                        SocketThreads stClient = new SocketThreads(cell, cfunit.Ip, cfunit.Port, SocketThreads.SType.CLIENT, "GET");
-                        textBox1.Text = stClient.Info;
+                        stClient = new SocketThreads(cell, new SocketUnit() { Ip=cfunit.Ip, Port=cfunit.Port, St= SocketUnit.SType.CLIENT,Infor=""});
+                        
                     }
                 }
             }
@@ -126,7 +126,13 @@ namespace MMS
 
         private void btnDiscon_Click(object sender, EventArgs e)
         {
+            
+        }
 
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if(stClient != null)
+            textBox1.Text = stClient.Su.Infor;
         }
 
 

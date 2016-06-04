@@ -12,7 +12,7 @@
     <Index>2</Index>
   </config>
   <config>
-    <Ip>127.0.0.1</Ip>
+    <Ip>10.43.52.5</Ip>
     <Port>4909</Port>
     <CellName>F29</CellName>
     <HgaloadState>stop</HgaloadState>

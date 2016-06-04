@@ -23,27 +23,12 @@ namespace MMS
 
         public Thread thds;
 
-        private string ip;
+        private SocketUnit _su;
 
-        public string Ip
+        public SocketUnit Su
         {
-            get { return ip; }
-            set { ip = value; }
-        }
-        private int port;
-
-        public int Port
-        {
-            get { return port; }
-            set { port = value; }
-        }
-
-        private string info;
-
-        public string Info
-        {
-            get { return info; }
-            set { info = value; }
+            get { return _su; }
+            set { _su = value; }
         }
 
         private Socket sk;
@@ -55,32 +40,26 @@ namespace MMS
         }
 
 
-        public SocketThreads(string name, string ip, int port, SType st, string information)
+        public SocketThreads(string name, SocketUnit su)
         {
-            Info = information;
-            Ip = ip;
-            Port = port;
-            if (st.ToString() == "SERVER")
+            Su = su;
+            if (su.St.ToString() == "SERVER")
             {
                 thds = new Thread(this.SocketServer);
-                thds.Name = name;
-                thds.Start();
             }
             else
             {
                 thds = new Thread(this.SocketClient);
-                thds.Name = name;
-                thds.Start();
             }
             thds.Name = name;
             thds.Start();
         }
 
-        public void SocketServer()
+        public void SocketServer(object obj)
         {
-            IPAddress ipa = IPAddress.Parse(Ip);
+            IPAddress ipa = IPAddress.Parse(Su.Ip);
             Sk = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            IPEndPoint iep = new IPEndPoint(ipa, Port);
+            IPEndPoint iep = new IPEndPoint(ipa, Su.Port);
             //存储client发过来的数据
             Byte[] byteMessage = new Byte[100];
             //绑定server端IP 与 端口
@@ -98,7 +77,7 @@ namespace MMS
                     //判断是否是Client端请求数据的命令，并发送对应数据回去
                     if (msg == "GET")
                     { 
-                        skRev.Send(System.Text.Encoding.Default.GetBytes(Info));
+                        skRev.Send(System.Text.Encoding.Default.GetBytes(Su.Infor));
                     }
 
                     skRev.Close();
@@ -117,10 +96,13 @@ namespace MMS
             Byte[] byteMessage = new Byte[100];
             //建立并保持Socket连接
             
-            IPAddress ipa = IPAddress.Parse(Ip);
+            //IPAddress ipa = IPAddress.Parse(Su.Ip);
             Sk = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            
-            Sk.Connect(Ip, Port);
+
+            if (!sk.Connected)
+            {
+                Sk.Connect(Su.Ip, Su.Port);
+            }
             
             while (true)
             {
@@ -129,14 +111,11 @@ namespace MMS
                     //休眠50ms
                     Thread.Sleep(50);
 
-                    //发送命令
-                    if (Sk.Connected)
+                    //接受数据
+                    if (sk.Connected)
                     {
-                        sk.Send(System.Text.Encoding.Default.GetBytes("GET"));
-
-                        //接受Server返回数据，并将其转换为String类型
                         sk.Receive(byteMessage);
-                        Info = System.Text.Encoding.Default.GetString(byteMessage).ToString();
+                        Su.Infor = System.Text.Encoding.Default.GetString(byteMessage).ToString();
                     }
                     
                 }
